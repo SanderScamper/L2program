@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Random;
 import org.l2program.Acceleratable;
+import org.l2program.Bank;
+import org.l2program.BankAccount;
 import org.l2program.Car;
 import org.l2program.Toyota;
 
@@ -53,7 +55,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-        System.out.println(newtonSqrt(18.0, 10.0, 0.01));
+        //System.out.println(newtonSqrt(18.0, 10.0, 0.01));
 //        BufferedReader myIn = new BufferedReader(new InputStreamReader(System.in));
 //        String input = myIn.readLine();
 //        int max=Integer.parseInt(input);
@@ -93,6 +95,15 @@ public class Main {
 //            System.out.println("It does.");
 //        }
 //        driveAcceleratable((Acceleratable) vehicle);
+        Bank b = new Bank();
+        long acct1ID = b.registerAccount(new BankAccount(1000));
+        long acct2ID = b.registerAccount(new BankAccount(500));
+        
+        System.out.println(b.queryAccount(acct1ID).getBalance());
+        b.queryAccount(acct1ID).deposit(100);
+        System.out.println(b.queryAccount(acct1ID).getBalance());
+        b.transferBetween(acct1ID, acct2ID, 300);
+        b.queryAccount(acct1ID).printLog();
     }
 
 }
