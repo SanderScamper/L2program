@@ -19,22 +19,22 @@ import org.l2program.Toyota;
  * @author sander
  */
 public class Main {
-    
+
     int data;
-    
+
     public int square(int x) {
         return x * x;
     }
-    
+
     public void testPrint() {
         System.out.println(5 * 5);
     }
-    
+
     public int fibonacci(int n) {
-        if(n < 1) {
+        if (n < 1) {
             throw new IllegalArgumentException("n must be > 0");
         }
-        switch(n) {
+        switch (n) {
             case 1:
             case 2:
                 return 1;
@@ -42,19 +42,38 @@ public class Main {
                 return fibonacci(n - 2) + fibonacci(n - 1);
         }
     }
-    
+
     public static void driveAcceleratable(Acceleratable a) {
         a.accelerate();
     }
-    
+
+    public static double newtonSqrt(double n) {
+        return newtonSqrt(n, 0.01);
+    }
+
+    public static double newtonSqrt(double n, double errorThreshold) {
+        return newtonSqrt(n, n/2 , errorThreshold);
+    }
+
     public static double newtonSqrt(double n, double approx, double errorThreshold) {
-        return 0.0;
+        double currentApprox;
+        double newApprox = approx;
+        int count = 0;
+        do {
+            currentApprox = newApprox;
+            count = count + 1;
+            newApprox = currentApprox - (currentApprox * currentApprox - n) / (2 * currentApprox);
+            System.out.println("Iteration " + count + ":" + newApprox);
+        } while (Math.abs(newApprox - currentApprox) >= errorThreshold);
+        System.out.println("Math.sqrt(" + n + ")=" + Math.sqrt(n));
+        return newApprox;
     }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
+        newtonSqrt(100, 0.0001);
         //System.out.println(newtonSqrt(18.0, 10.0, 0.01));
 //        BufferedReader myIn = new BufferedReader(new InputStreamReader(System.in));
 //        String input = myIn.readLine();
@@ -98,7 +117,7 @@ public class Main {
         Bank b = new Bank();
         long acct1ID = b.registerAccount(new BankAccount(1000));
         long acct2ID = b.registerAccount(new BankAccount(500));
-        
+
         System.out.println(b.queryAccount(acct1ID).getBalance());
         b.queryAccount(acct1ID).deposit(100);
         System.out.println(b.queryAccount(acct1ID).getBalance());
